@@ -2,6 +2,7 @@
 
 # This sample demonstrates handling intents from an Alexa skill using the Alexa Skills Kit SDK.
 import logging
+import journaling_service
 
 from ask_sdk_core.skill_builder import SkillBuilder
 from ask_sdk_core.dispatch_components import AbstractRequestHandler
@@ -23,7 +24,8 @@ class LaunchRequestHandler(AbstractRequestHandler):
 
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
-        speech_text = "Welcome, you can say Hello or Help. Which would you like to try?"
+        journaling_service = JournalingService()
+        speech_text = journaling_service.trigerPhrase()
         handler_input.response_builder.speak(speech_text).ask(speech_text)
         return handler_input.response_builder.response
 
