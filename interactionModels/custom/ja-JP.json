@@ -1,7 +1,7 @@
 {
     "interactionModel": {
         "languageModel": {
-            "invocationName": "hello python",
+            "invocationName": "ジャーナリング",
             "intents": [
                 {
                     "name": "AMAZON.CancelIntent",
@@ -14,19 +14,6 @@
                 {
                     "name": "AMAZON.StopIntent",
                     "samples": []
-                },
-                {
-                    "name": "HelloWorldIntent",
-                    "slots": [],
-                    "samples": [
-                        "hello",
-                        "how are you",
-                        "say hi world",
-                        "say hi",
-                        "hi",
-                        "say hello world",
-                        "say hello"
-                    ]
                 }
             ],
             "types": []
