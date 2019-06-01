@@ -18,6 +18,7 @@ logger.setLevel(logging.INFO)
 
 class LaunchRequestHandler(AbstractRequestHandler):
     """Handler for Skill Launch."""
+
     def can_handle(self, handler_input):
         # type: (HandlerInput) -> bool
         return is_request_type("LaunchRequest")(handler_input)
@@ -25,39 +26,46 @@ class LaunchRequestHandler(AbstractRequestHandler):
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
         service = JournalingService()
-        speech_text = service.trigerPhrase()
-        handler_input.response_builder.speak(speech_text).set_should_end_session(True)
+        speech_text = service.greetingPhrase()
+        handler_input.response_builder.speak(
+            speech_text)
         return handler_input.response_builder.response
 
 
-class HelloWorldIntentHandler(AbstractRequestHandler):
-     """Handler for Hello World Intent."""
-     def can_handle(self, handler_input):
-         # type: (HandlerInput) -> bool
-         return is_intent_name("HelloWorldIntent")(handler_input)
+class TriggerIntentIntentHandler(AbstractRequestHandler):
+    """Handler for Journaling Trigger Intent."""
 
-     def handle(self, handler_input):
-         # type: (HandlerInput) -> Response
-         speech_text = "Hello World!"
-         handler_input.response_builder.speak(speech_text).set_should_end_session(True)
-         return handler_input.response_builder.response
+    def can_handle(self, handler_input):
+        # type: (HandlerInput) -> bool
+        return is_intent_name("TriggerIntent")(handler_input)
+
+    def handle(self, handler_input):
+        # type: (HandlerInput) -> Response
+        service = JournalingService()
+        speech_text = service.trigerPhrase()
+        handler_input.response_builder.speak(
+            speech_text).set_should_end_session(True)
+        return handler_input.response_builder.response
 
 
 class HelpIntentHandler(AbstractRequestHandler):
     """Handler for Help Intent."""
+
     def can_handle(self, handler_input):
         # type: (HandlerInput) -> bool
         return is_intent_name("AMAZON.HelpIntent")(handler_input)
 
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
-        speech_text = "You can say hello to me! How can I help?"
+        service = JournalingService()
+        speech_text = service.helpPhrase()
         handler_input.response_builder.speak(speech_text).ask(speech_text)
         return handler_input.response_builder.response
 
 
 class CancelOrStopIntentHandler(AbstractRequestHandler):
     """Single handler for Cancel and Stop Intent."""
+
     def can_handle(self, handler_input):
         # type: (HandlerInput) -> bool
         return (is_intent_name("AMAZON.CancelIntent")(handler_input) or
@@ -65,13 +73,15 @@ class CancelOrStopIntentHandler(AbstractRequestHandler):
 
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
-        speech_text = "Goodbye!"
+        service = JournalingService()
+        speech_text = service.goodbyePhrase()
         handler_input.response_builder.speak(speech_text)
         return handler_input.response_builder.response
 
 
 class SessionEndedRequestHandler(AbstractRequestHandler):
     """Handler for Session End."""
+
     def can_handle(self, handler_input):
         # type: (HandlerInput) -> bool
         return is_request_type("SessionEndedRequest")(handler_input)
@@ -87,6 +97,7 @@ class SessionEndedRequestHandler(AbstractRequestHandler):
 # handler chain below.
 class IntentReflectorHandler(AbstractRequestHandler):
     """Handler for Hello World Intent."""
+
     def can_handle(self, handler_input):
         # type: (HandlerInput) -> bool
         return is_request_type("IntentRequest")(handler_input)
@@ -95,7 +106,8 @@ class IntentReflectorHandler(AbstractRequestHandler):
         # type: (HandlerInput) -> Response
         intent_name = handler_input.request_envelope.request.intent.name
         speech_text = ("You just triggered {}").format(intent_name)
-        handler_input.response_builder.speak(speech_text).set_should_end_session(True)
+        handler_input.response_builder.speak(
+            speech_text).set_should_end_session(True)
         return handler_input.response_builder.response
 
 
@@ -106,6 +118,7 @@ class ErrorHandler(AbstractExceptionHandler):
     """Catch-all exception handler, log exception and
     respond with custom message.
     """
+
     def can_handle(self, handler_input, exception):
         # type: (HandlerInput, Exception) -> bool
         return True
@@ -123,11 +136,12 @@ class ErrorHandler(AbstractExceptionHandler):
 # defined are included below. The order matters - they're processed top to bottom.
 sb = SkillBuilder()
 sb.add_request_handler(LaunchRequestHandler())
-sb.add_request_handler(HelloWorldIntentHandler())
+sb.add_request_handler(TriggerIntentIntentHandler())
 sb.add_request_handler(HelpIntentHandler())
 sb.add_request_handler(CancelOrStopIntentHandler())
 sb.add_request_handler(SessionEndedRequestHandler())
-sb.add_request_handler(IntentReflectorHandler()) # make sure IntentReflectorHandler is last so it doesn't override your custom intent handlers
+# make sure IntentReflectorHandler is last so it doesn't override your custom intent handlers
+sb.add_request_handler(IntentReflectorHandler())
 
 sb.add_exception_handler(ErrorHandler())
 
