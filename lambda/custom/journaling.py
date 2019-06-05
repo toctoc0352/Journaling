@@ -28,7 +28,7 @@ class LaunchRequestHandler(AbstractRequestHandler):
         service = JournalingService()
         speech_text = service.greetingPhrase()
         handler_input.response_builder.speak(
-            speech_text)
+            speech_text).set_should_end_session(False)
         return handler_input.response_builder.response
 
 
@@ -44,7 +44,7 @@ class TriggerIntentIntentHandler(AbstractRequestHandler):
         service = JournalingService()
         speech_text = service.trigerPhrase()
         handler_input.response_builder.speak(
-            speech_text).set_should_end_session(True)
+            speech_text).set_should_end_session(False)
         return handler_input.response_builder.response
 
 
