@@ -27,8 +27,7 @@ class LaunchRequestHandler(AbstractRequestHandler):
         # type: (HandlerInput) -> Response
         service = JournalingService()
         speech_text = service.greetingPhrase()
-        handler_input.response_builder.speak(
-            speech_text).ask(speech_text)
+        handler_input.response_builder.speak(speech_text).ask(speech_text)
         return handler_input.response_builder.response
 
 
@@ -43,8 +42,7 @@ class TriggerIntentIntentHandler(AbstractRequestHandler):
         # type: (HandlerInput) -> Response
         service = JournalingService()
         speech_text = service.trigerPhrase()
-        handler_input.response_builder.speak(
-            speech_text).set_should_end_session(True)
+        handler_input.response_builder.speak(speech_text).set_should_end_session(True)
         return handler_input.response_builder.response
 
 
@@ -68,8 +66,9 @@ class CancelOrStopIntentHandler(AbstractRequestHandler):
 
     def can_handle(self, handler_input):
         # type: (HandlerInput) -> bool
-        return (is_intent_name("AMAZON.CancelIntent")(handler_input) or
-                is_intent_name("AMAZON.StopIntent")(handler_input))
+        return is_intent_name("AMAZON.CancelIntent")(handler_input) or is_intent_name(
+            "AMAZON.StopIntent"
+        )(handler_input)
 
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
@@ -106,8 +105,7 @@ class IntentReflectorHandler(AbstractRequestHandler):
         # type: (HandlerInput) -> Response
         intent_name = handler_input.request_envelope.request.intent.name
         speech_text = ("You just triggered {}").format(intent_name)
-        handler_input.response_builder.speak(
-            speech_text).set_should_end_session(True)
+        handler_input.response_builder.speak(speech_text).set_should_end_session(True)
         return handler_input.response_builder.response
 
 
