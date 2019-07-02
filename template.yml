@@ -52,7 +52,8 @@ Resources:
   CWLtoKinesisFirehoseRole:
     Description: Creating service role in IAM for CloudWatch Logs
     Type: AWS::IAM::Role
-      RoleName: !Sub 'CodeStar-${ProjectId}-Execution${Stage}'
+    Properties:
+      RoleName: !Sub 'CodeStar-${ProjectId}-CWLtoKinesisFirehoseRole${Stage}'
       AssumeRolePolicyDocument:
         Statement:
         - Effect: Allow
@@ -73,10 +74,10 @@ Resources:
   SubscriptionFilter:
     Type: "AWS::Logs::SubscriptionFilter"
     Properties:
-      LogGroupName: "/aws/lambda/awscodestar-${ProjectId}-lambd-CustomDefaultFunction-EK2SA1MNKIGU"
-      FilterPattern: ""
-      DestinationArn: "arn:aws:firehose:region:${account_id}:deliverystream/Journaling"
-      filter-name: "ALL"
+      LogGroupName: !Sub '/aws/lambda/awscodestar-${ProjectId}-lambd-CustomDefaultFunction-EK2SA1MNKIGU'
+      FilterPattern: ''
+      DestinationArn: !Sub 'arn:aws:firehose:region:${account_id}:deliverystream/Journaling'
+      filter-name: 'ALL'
 
 Outputs:
   overrides:
