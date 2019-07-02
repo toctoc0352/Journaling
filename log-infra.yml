@@ -1,0 +1,56 @@
+AWSTemplateFormatVersion: 2010-09-09
+
+Parameters:
+  ProjectId:
+    Type: String
+    Description: AWS CodeStar project ID.
+  Stage:
+    Type: String
+    Description: The name for a project pipeline stage, such as Staging or Prod, for which resources are provisioned and deployed.
+    Default: ''
+
+Resources:
+  CWLtoKinesisFirehoseRole:
+    Description: Creating service role in IAM for CloudWatch Logs
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: !Sub '${ProjectId}-CWLtoKinesisFirehoseRole${Stage}'
+      AssumeRolePolicyDocument:
+        Statement:
+        - Effect: Allow
+          Principal:
+            Service: [logs.region.amazonaws.com]
+          Action: sts:AssumeRole
+      Path: /
+      Policies:
+      - PolicyName: !Sub '${ProjectId}-Permissions-Policy-For-CWL{Stage}'
+        PolicyDocument:
+          Statement:
+          - Effect: "Allow"
+            Action: ["firehose:*"]
+            Resource: ["arn:aws:firehose:region:123456789012:*"]
+          - Effect: "Allow"
+            Action: ["iam:PassRole"]
+            Resource: ["arn:aws:iam::123456789012:role/CWLtoKinesisFirehoseRole"]
+  SubscriptionFilter:
+    Type: AWS::Logs::SubscriptionFilter
+    Properties:
+      LogGroupName: !Sub '/aws/lambda/awscodestar-${ProjectId}-lambd-CustomDefaultFunction-EK2SA1MNKIGU'
+      FilterPattern: ''
+      DestinationArn: !Sub 'arn:aws:firehose:region:${account_id}:deliverystream/Journaling'
+      filter-name: 'ALL'
+
+Outputs:
+  overrides:
+      Value: !Sub |-
+        {
+          "manifest": {
+            "apis": {
+              "custom": {
+                "endpoint": {
+                  "uri": "${CustomDefaultFunction.Alias}"
+                }
+              }
+            }
+          }
+        }
