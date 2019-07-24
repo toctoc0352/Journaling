@@ -7,13 +7,11 @@ from journaling_service import JournalingService
 from ask_sdk_core.skill_builder import SkillBuilder
 from ask_sdk_core.dispatch_components import AbstractRequestHandler
 from ask_sdk_core.dispatch_components import AbstractExceptionHandler
+from ask_sdk_core.dispatch_components import AbstractRequestInterceptor
 from ask_sdk_core.utils import is_request_type, is_intent_name
 from ask_sdk_core.handler_input import HandlerInput
 
 from ask_sdk_model import Response
-
-logger = logging.getLogger(__name__)
-logger.setLevel(logging.INFO)
 
 
 class LaunchRequestHandler(AbstractRequestHandler):
@@ -109,6 +107,15 @@ class IntentReflectorHandler(AbstractRequestHandler):
         return handler_input.response_builder.response
 
 
+# Request and Response Loggers
+class RequestLogger(AbstractRequestInterceptor):
+    """Log the request envelope."""
+
+    def process(self, handler_input):
+        # type: (HandlerInput) -> None
+        logging.info("{}".format(handler_input.request_envelope))
+
+
 # Generic error handling to capture any syntax or routing errors. If you receive an error
 # stating the request handler chain is not found, you have not implemented a handler for
 # the intent being invoked or included it in the skill builder below.
@@ -123,7 +130,7 @@ class ErrorHandler(AbstractExceptionHandler):
 
     def handle(self, handler_input, exception):
         # type: (HandlerInput, Exception) -> Response
-        logger.error(exception, exc_info=True)
+        logging.error(exception, exc_info=True)
         speech_text = "Sorry, I couldn't understand what you said. Please try again."
         handler_input.response_builder.speak(speech_text).ask(speech_text)
         return handler_input.response_builder.response
@@ -142,5 +149,7 @@ sb.add_request_handler(SessionEndedRequestHandler())
 sb.add_request_handler(IntentReflectorHandler())
 
 sb.add_exception_handler(ErrorHandler())
+
+sb.add_global_request_interceptor(RequestLogger())
 
 handler = sb.lambda_handler()
