@@ -113,7 +113,9 @@ class RequestLogger(AbstractRequestInterceptor):
 
     def process(self, handler_input):
         # type: (HandlerInput) -> None
-        logging.info("{}".format(handler_input.request_envelope))
+        logging.info(
+            "Request received: {}".format(handler_input.request_envelope.request)
+        )
 
 
 # Generic error handling to capture any syntax or routing errors. If you receive an error
