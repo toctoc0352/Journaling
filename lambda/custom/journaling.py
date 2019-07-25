@@ -13,6 +13,9 @@ from ask_sdk_core.handler_input import HandlerInput
 
 from ask_sdk_model import Response
 
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
+
 
 class LaunchRequestHandler(AbstractRequestHandler):
     """Handler for Skill Launch."""
@@ -113,7 +116,7 @@ class RequestLogger(AbstractRequestInterceptor):
 
     def process(self, handler_input):
         # type: (HandlerInput) -> None
-        logging.info(
+        logger.info(
             "Request received: {}".format(handler_input.request_envelope.request)
         )
 
@@ -132,7 +135,7 @@ class ErrorHandler(AbstractExceptionHandler):
 
     def handle(self, handler_input, exception):
         # type: (HandlerInput, Exception) -> Response
-        logging.error(exception, exc_info=True)
+        logger.error(exception, exc_info=True)
         speech_text = "Sorry, I couldn't understand what you said. Please try again."
         handler_input.response_builder.speak(speech_text).ask(speech_text)
         return handler_input.response_builder.response
