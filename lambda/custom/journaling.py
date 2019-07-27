@@ -2,6 +2,7 @@
 
 # This sample demonstrates handling intents from an Alexa skill using the Alexa Skills Kit SDK.
 import logging
+import json
 from journaling_service import JournalingService
 
 from ask_sdk_core.skill_builder import SkillBuilder
@@ -117,7 +118,7 @@ class RequestLogger(AbstractRequestInterceptor):
     def process(self, handler_input):
         # type: (HandlerInput) -> None
         request = handler_input.request_envelope.request
-        print(*request)
+        print(json.dumps(request))
 
 
 # Generic error handling to capture any syntax or routing errors. If you receive an error
