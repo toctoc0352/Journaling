@@ -2,13 +2,11 @@
 
 # This sample demonstrates handling intents from an Alexa skill using the Alexa Skills Kit SDK.
 import logging
-import json
 from journaling_service import JournalingService
 
 from ask_sdk_core.skill_builder import SkillBuilder
 from ask_sdk_core.dispatch_components import AbstractRequestHandler
 from ask_sdk_core.dispatch_components import AbstractExceptionHandler
-from ask_sdk_core.dispatch_components import AbstractRequestInterceptor
 from ask_sdk_core.utils import is_request_type, is_intent_name
 from ask_sdk_core.handler_input import HandlerInput
 
@@ -111,16 +109,6 @@ class IntentReflectorHandler(AbstractRequestHandler):
         return handler_input.response_builder.response
 
 
-# Request and Response Loggers
-class RequestLogger(AbstractRequestInterceptor):
-    """Log the request envelope."""
-
-    def process(self, handler_input):
-        # type: (HandlerInput) -> None
-        request = handler_input.request_envelope.request
-        print(json.dumps(request))
-
-
 # Generic error handling to capture any syntax or routing errors. If you receive an error
 # stating the request handler chain is not found, you have not implemented a handler for
 # the intent being invoked or included it in the skill builder below.
@@ -154,7 +142,5 @@ sb.add_request_handler(SessionEndedRequestHandler())
 sb.add_request_handler(IntentReflectorHandler())
 
 sb.add_exception_handler(ErrorHandler())
-
-sb.add_global_request_interceptor(RequestLogger())
 
 handler = sb.lambda_handler()
