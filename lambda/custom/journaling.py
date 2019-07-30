@@ -15,7 +15,6 @@ from ask_sdk_model import Response
 
 logger = getLogger(__name__)
 logger.setLevel(INFO)
-logger.propagate = False
 
 
 class LaunchRequestHandler(AbstractRequestHandler):
