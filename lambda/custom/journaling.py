@@ -13,6 +13,8 @@ from ask_sdk_core.handler_input import HandlerInput
 
 from ask_sdk_model import Response
 
+import json
+
 logger = getLogger(__name__)
 logger.setLevel(INFO)
 
@@ -117,7 +119,10 @@ class RequestLogger(AbstractRequestInterceptor):
     def process(self, handler_input):
         # type: (HandlerInput) -> None
         request = handler_input.request_envelope.request
-        logger.info(request)
+        request_str = json.dumps(
+            request.__dict__, ensure_ascii=False, indent=2, default=str
+        )
+        logger.info(request_str.replace("\n", ""))
 
 
 # Generic error handling to capture any syntax or routing errors. If you receive an error
