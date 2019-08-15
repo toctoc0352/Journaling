@@ -13,7 +13,7 @@ from ask_sdk_core.handler_input import HandlerInput
 
 from ask_sdk_model import Response
 
-# import json
+import json
 
 import boto3
 
@@ -122,12 +122,14 @@ class RequestLogger(AbstractRequestInterceptor):
     def process(self, handler_input):
         # type: (HandlerInput) -> None
         request = handler_input.request_envelope.request
+        request_str = json.dumps(
+            request.__dict__, ensure_ascii=False, indent=2, default=str
+        )
 
-        client.put_record(DeliveryStreamName="journaling-log", Record=request)
+        client.put_record(
+            DeliveryStreamName="journaling-log", Record={"Data": request_str}
+        )
 
-        # request_str = json.dumps(
-        #    request.__dict__, ensure_ascii=False, indent=2, default=str
-        # )
         # logger.info(request_str.replace("\n", ""))
 
 
