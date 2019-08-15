@@ -43,11 +43,8 @@ Resources:
         Statement:
         - Effect: Allow
           Principal:
-            Service: [lambda.amazonaws.com]
+            Service: [lambda.amazonaws.com, firehose.amazonaws.com]
           Action: sts:AssumeRole
-        - Effect: "Allow"
-          Action: ["firehose:*"]
-          Resource: ["arn:aws:firehose:*"]
       Path: /
       ManagedPolicyArns:
         - !Sub 'arn:${AWS::Partition}:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole'
