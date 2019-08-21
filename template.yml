@@ -43,7 +43,7 @@ Resources:
         Statement:
         - Effect: Allow
           Principal:
-            Service: [lambda.amazonaws.com, firehose.amazonaws.com]
+            Service: [lambda.amazonaws.com]
           Action: sts:AssumeRole
       Path: /
       ManagedPolicyArns:
