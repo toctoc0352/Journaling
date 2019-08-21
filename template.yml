@@ -46,6 +46,16 @@ Resources:
             Service: [lambda.amazonaws.com]
           Action: sts:AssumeRole
       Path: /
+      Policies:
+      - PolicyName: !Sub '${ProjectId}-Permissions-Policy-For-firehose'
+        PolicyDocument:
+          Statement:
+          - Effect: "Allow"
+            Action: ["firehose:*"]
+            Resource: ["arn:aws:firehose:*"]
+          - Effect: "Allow"
+            Action: ["iam:PassRole"]
+            Resource: ["arn:aws:iam::*"]
       ManagedPolicyArns:
         - !Sub 'arn:${AWS::Partition}:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole'
       PermissionsBoundary: !Sub 'arn:${AWS::Partition}:iam::${AWS::AccountId}:policy/CodeStar_${ProjectId}_PermissionsBoundary'
