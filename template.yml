@@ -43,19 +43,19 @@ Resources:
         Statement:
         - Effect: Allow
           Principal:
-            Service: [lambda.amazonaws.com]
+            Service: [
+              lambda.amazonaws.com,
+              firehose.amazonaws.com
+            ]
           Action: sts:AssumeRole
       Path: /
       Policies:
-      - PolicyName: !Sub '${ProjectId}-Permissions-Policy-For-firehose'
+      - PolicyName: !Sub '${ProjectId}-Permissions-Policy-For-CWL'
         PolicyDocument:
           Statement:
-          - Effect: "Allow"
-            Action: ["firehose:*"]
-            Resource: ["arn:aws:firehose:*"]
-          - Effect: "Allow"
-            Action: ["iam:PassRole"]
-            Resource: ["arn:aws:iam::*"]
+          - Effect: Allow
+            Action: ['firehose:PutRecord']
+            Resource: [!Sub 'arn:aws:firehose:${AWS::Region}:${AWS::AccountId}:deliverystream/journaling-log']
       ManagedPolicyArns:
         - !Sub 'arn:${AWS::Partition}:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole'
       PermissionsBoundary: !Sub 'arn:${AWS::Partition}:iam::${AWS::AccountId}:policy/CodeStar_${ProjectId}_PermissionsBoundary'
