@@ -34,6 +34,16 @@ Resources:
       Events:
         AlexaSkillEvent:
           Type: AlexaSkill
+  FirehosePutRecordPolicy:
+    Description: Firehose PutRecordPolicy
+    Type: AWS::IAM::Policy
+    Properties:
+      PolicyName:  !Sub '${ProjectId}-FirehosePutRecordPolicy'
+      PolicyDocument:
+        Statement:
+        - Effect: "Allow"
+          Action: ['firehose:PutRecord']
+          Resource: [!Sub 'arn:aws:firehose:${AWS::Region}:${AWS::AccountId}:deliverystream/journaling-log']
   LambdaExecutionRole:
     Description: Creating service role in IAM for AWS Lambda
     Type: AWS::IAM::Role
@@ -43,21 +53,12 @@ Resources:
         Statement:
         - Effect: Allow
           Principal:
-            Service: [
-              lambda.amazonaws.com,
-              firehose.amazonaws.com
-            ]
+            Service: [lambda.amazonaws.com]
           Action: sts:AssumeRole
       Path: /
-      Policies:
-      - PolicyName: !Sub '${ProjectId}-Permissions-Policy-For-CWL'
-        PolicyDocument:
-          Statement:
-          - Effect: Allow
-            Action: ['firehose:PutRecord']
-            Resource: [!Sub 'arn:aws:firehose:${AWS::Region}:${AWS::AccountId}:deliverystream/journaling-log']
       ManagedPolicyArns:
         - !Sub 'arn:${AWS::Partition}:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole'
+        - !Sub 'arn:${AWS::Partition}:iam::aws:policy/service-role/${ProjectId}-FirehosePutRecordPolicy'        
       PermissionsBoundary: !Sub 'arn:${AWS::Partition}:iam::${AWS::AccountId}:policy/CodeStar_${ProjectId}_PermissionsBoundary'
 
 Outputs:
