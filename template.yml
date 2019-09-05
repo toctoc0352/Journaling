@@ -36,9 +36,10 @@ Resources:
           Type: AlexaSkill
   FirehosePutRecordPolicy:
     Description: Firehose PutRecordPolicy
-    Type: AWS::IAM::Policy
+    Type: AWS::IAM::ManagedPolicy
     Properties:
-      PolicyName:  !Sub '${ProjectId}-FirehosePutRecordPolicy'
+      ManagedPolicyName: !Sub '${ProjectId}-FirehosePutRecordPolicy'
+      Path: /
       PolicyDocument:
         Statement:
         - Effect: "Allow"
