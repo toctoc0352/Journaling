@@ -45,8 +45,6 @@ Resources:
         - Effect: "Allow"
           Action: ['firehose:PutRecord']
           Resource: [!Sub 'arn:aws:firehose:${AWS::Region}:${AWS::AccountId}:deliverystream/journaling-log']
-      Roles:
-        - Ref: 'LambdaExecutionRole'
   LambdaExecutionRole:
     Description: Creating service role in IAM for AWS Lambda
     Type: AWS::IAM::Role
