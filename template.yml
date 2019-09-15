@@ -34,17 +34,6 @@ Resources:
       Events:
         AlexaSkillEvent:
           Type: AlexaSkill
-  FirehosePutRecordPolicy:
-    Description: Firehose PutRecordPolicy
-    Type: AWS::IAM::ManagedPolicy
-    Properties:
-      ManagedPolicyName: !Sub '${ProjectId}-FirehosePutRecordPolicy'
-      Path: /
-      PolicyDocument:
-        Statement:
-        - Effect: "Allow"
-          Action: ['firehose:PutRecord']
-          Resource: [!Sub 'arn:aws:firehose:${AWS::Region}:${AWS::AccountId}:deliverystream/journaling-log']
   LambdaExecutionRole:
     Description: Creating service role in IAM for AWS Lambda
     Type: AWS::IAM::Role
@@ -59,7 +48,6 @@ Resources:
       Path: /
       ManagedPolicyArns:
         - !Sub 'arn:${AWS::Partition}:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole'
-        - !Ref FirehosePutRecordPolicy        
       PermissionsBoundary: !Sub 'arn:${AWS::Partition}:iam::${AWS::AccountId}:policy/CodeStar_${ProjectId}_PermissionsBoundary'
 
 Outputs:
