@@ -3,7 +3,7 @@ import yaml
 
 class JournalingRepository:
     def __init__(self):
-        with open("message.yaml", "r") as yf:
+        with open("message.yml", "r") as yf:
             self.__messages = yaml.safe_load(yf)
 
         self.journaling_trigger = self.__messages["journaling_phrase"]
