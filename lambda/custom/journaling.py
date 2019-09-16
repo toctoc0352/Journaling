@@ -26,7 +26,7 @@ class LaunchRequestHandler(AbstractRequestHandler):
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
         service = JournalingService()
-        speech_text = service.greetingPhrase()
+        speech_text = service.greeting_phrase()
         handler_input.response_builder.speak(speech_text).ask(speech_text)
         return handler_input.response_builder.response
 
@@ -41,7 +41,7 @@ class TriggerIntentIntentHandler(AbstractRequestHandler):
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
         service = JournalingService()
-        speech_text = service.trigerPhrase()
+        speech_text = service.triger_phrase()
         handler_input.response_builder.speak(speech_text).set_should_end_session(True)
         return handler_input.response_builder.response
 
@@ -56,7 +56,7 @@ class HelpIntentHandler(AbstractRequestHandler):
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
         service = JournalingService()
-        speech_text = service.helpPhrase()
+        speech_text = service.help_phrase()
         handler_input.response_builder.speak(speech_text).ask(speech_text)
         return handler_input.response_builder.response
 
@@ -73,7 +73,7 @@ class CancelOrStopIntentHandler(AbstractRequestHandler):
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
         service = JournalingService()
-        speech_text = service.goodbyePhrase()
+        speech_text = service.goodbye_phrase()
         handler_input.response_builder.speak(speech_text)
         return handler_input.response_builder.response
 
