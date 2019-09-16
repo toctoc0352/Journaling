@@ -1,2 +1,2 @@
 ask-sdk-core
-yaml
+pyyaml
