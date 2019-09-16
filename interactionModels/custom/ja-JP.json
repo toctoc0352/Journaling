@@ -19,7 +19,7 @@
                     "name": "TriggerIntent",
                     "slots": [],
                     "samples": [
-                        "何を書けばいい"
+                        "お題を教えて"
                     ]
                 }
             ],

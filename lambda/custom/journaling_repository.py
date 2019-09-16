@@ -1,29 +1,20 @@
+import yaml
+
+
 class JournalingRepository:
     def __init__(self):
-        self.journalingTrigger = [
-            "感謝していることを書いてみましょう。",
-            "今日学んだことを書いてみましょう。",
-            "どうすれば今日をもっと良くできたか書いてみましょう",
-            "今日の出来事で一番大事なことを書いてみましょう。",
-        ]
+        with open("message.yaml", "r") as yf:
+            self.__messages = yaml.safe_load(yf)
 
-        self.help = """
-        ノートや日記に今日の出来事について
-        １つだけでもいいので書いてみてください。
-        何を書けばいいかわからない場合は、何を書けばいい、と話しかけてください。
-        書き終わったら、書いたよ、と話しかけてください。
-        """
+        self.journaling_trigger = self.__messages["journaling_phrase"]
 
-        self.greeting = """
-        今日の出来事を振り返ってみましょう。
-        ノートや日記に書いてみてください。
-        書き終わったら、書いたよ、と話しかけてください
-        """
+        self.help = self.__messages["help"]
 
-        self.goodbye = """
-        お疲れ様でした。
-        がんばった自分を褒めてあげて下さい
-        """
+        self.hello = self.__messages["hello"]
+
+        self.special_phrase = self.__messages["special_phrase"]
+
+        self.help_detail = self.__messages["help_detail"]
 
     def get_journaling_trigger_list(self):
-        return self.journalingTrigger
+        return self.journaling_trigger
