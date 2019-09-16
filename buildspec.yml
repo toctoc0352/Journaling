@@ -9,6 +9,8 @@ phases:
     commands:
       - pip install black
       - black . --check
+      - pip install flake8
+      - flake8 .
 
   build:
     commands:
