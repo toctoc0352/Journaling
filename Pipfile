@@ -10,6 +10,7 @@ rope = "*"
 
 [packages]
 ask-sdk-core = "*"
+pyyaml = "*"
 
 [requires]
 python_version = "3.7"

@@ -72,9 +72,9 @@ class CancelOrStopIntentHandler(AbstractRequestHandler):
 
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
-        service = JournalingService()
-        speech_text = service.goodbye_phrase()
-        handler_input.response_builder.speak(speech_text)
+        # service = JournalingService()
+        # speech_text = service.goodbye_phrase()
+        # handler_input.response_builder.speak(speech_text)
         return handler_input.response_builder.response
 
 
