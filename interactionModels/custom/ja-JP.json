@@ -17,13 +17,54 @@
                 },
                 {
                     "name": "TriggerIntent",
-                    "slots": [],
+                    "slots": [
+                        {
+                            "name": "trigger",
+                            "type": "TRIGGER"
+                        }
+                    ],
                     "samples": [
-                        "お題を教えて"
+                        "{trigger}"
                     ]
                 }
             ],
-            "types": []
+            "types": [
+                {
+                    "name": "TRIGGER",
+                    "values": [
+                        {
+                            "name": {
+                                "value": "何を書けばいい"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "今日のお題は"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "今日のテーマは"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "今日の内容は"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "テーマを教えて"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "お題を教えて"
+                            }
+                        }
+                    ]
+                }
+            ]
         }
     }
 }

@@ -11,7 +11,7 @@ class JournalingService:
         return random.choice(trigger_list)
 
     def help_phrase(self):
-        return self.journaling_repository.help
+        return self.journaling_repository.help_detail
 
     def greeting_phrase(self):
         greeting_phrase = self.journaling_repository.hello
