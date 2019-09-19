@@ -5,9 +5,9 @@
         "ja-JP": {
           "summary": "A basic skill made from Alexa Skills Kit template",
           "examplePhrases": [
-            "Alexa open hello python",
-            "Alexa tell hello python hello",
-            "Alexa ask hello python say hello"
+            "アレクサ、ジャーナリングを開いて",
+            "アレクサ、ジャーナリングで今日のテーマは?",
+            "アレクサ、ジャーナリングで今日のお題は?"
           ],
           "name": "ジャーナリング〜自分と向き合う5分間〜",
           "description": "A basic skill made from Alexa Skills Kit template"
@@ -19,8 +19,7 @@
       "distributionCountries": []
     },
     "apis": {
-      "custom": {
-      }
+      "custom": {}
     },
     "manifestVersion": "1.0"
   }
